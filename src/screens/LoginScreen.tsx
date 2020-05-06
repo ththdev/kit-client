@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import KakaoLogin from'react-kakao-login'
+import { GoogleLogin } from 'react-google-login'
 import { Link } from 'react-router-dom'
 import CheckBoxFill from '../assets/icons/checkbox-circle-fill.svg'
 import CheckBoxLine from '../assets/icons/checkbox-circle-line.svg'
+import GoogleFill from '../assets/icons/google-fill.svg'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -45,7 +47,7 @@ const LoginScreen:React.FC = () => {
 
     return (
         <Layout>
-            <LoginCarousel />
+            {/* <LoginCarousel /> */}
             <Container>
                 <Message>
                     모든 답이<br />
@@ -63,7 +65,7 @@ const LoginScreen:React.FC = () => {
                 </SetLogin>
                 <KakaoButton 
                     jsKey=""
-                    buttonText="Kakao"
+                    buttonText="Kakao으로 시작하기"
                     onSuccess={responseKakao}
                     onFailure={responseFail}
                     getProfile={true}
@@ -71,13 +73,10 @@ const LoginScreen:React.FC = () => {
                 <LineOr>
                     <span>또는</span>
                 </LineOr>
-                <KakaoButton 
-                    jsKey=""
-                    buttonText="Kakao"
-                    onSuccess={responseKakao}
-                    onFailure={responseFail}
-                    getProfile={true}
-                />
+                <GoogleButton>
+                    <GoogleIcon src={GoogleFill} />
+                    Google로 시작하기
+                </GoogleButton>
                 <UserInfo>
                     <Link to="/">회원가입</Link>
                     <Link to="/">암호 재설정</Link>
@@ -91,15 +90,20 @@ const responseKakao = (res: any) => {
     console.log(res)
 }
 
+const responseGoogle = (res: any) => {
+    console.log(res)
+}
+
 const responseFail = (err: any) => {
     console.error(err)
 }
 
 const CustomCarousel = styled(Slider)`
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
+
 `
 
 const Layout = styled.div`
@@ -108,7 +112,7 @@ const Layout = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #000;
 `
 
 const Container = styled.div`
@@ -139,7 +143,7 @@ const LocalField = styled.div`
 
         &:focus { outline: none }
         &::placeholder {
-            color: #fff;
+            color: #000;
             font-size: 16px;
         }
     }
@@ -199,6 +203,26 @@ const KakaoButton = styled(KakaoLogin)`
     border-radius: 3px;
     font-size: 16px;
     border: none;
+`
+
+const GoogleButton = styled.div`
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+`
+
+const GoogleIcon = styled.img`
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 30px;
 `
 
 const UserInfo = styled.div`
