@@ -138,7 +138,6 @@ const LocalField = styled.div`
         border: none;
 
         &:focus { outline: none }
-
         &::placeholder {
             color: #fff;
             font-size: 16px;
