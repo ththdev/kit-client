@@ -6,41 +6,8 @@ import { Link } from 'react-router-dom'
 import CheckBoxFill from '../assets/icons/checkbox-circle-fill.svg'
 import CheckBoxLine from '../assets/icons/checkbox-circle-line.svg'
 import GoogleFill from '../assets/icons/google-fill.svg'
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 
-// Backgrounds
-import Background1 from '../assets/images/background1.jpg'
-import Background2 from '../assets/images/background2.jpg'
-import Background3 from '../assets/images/background3.jpg'
-
-import ResponsiveImage from '../components/base/ResponsiveImage'
-
-const LoginCarousel:React.FC = () => {
-    const settings = {
-        dots: false,
-        infinite: true,
-        vertical: true,
-        // verticalSwiping: true,
-        fade: true,
-        autoplay: true,
-        speed: 2000,
-        autoplaySpeed: 5000,
-    }
-    
-    return (
-        <div>
-            <CustomCarousel {...settings}>
-                <div><ResponsiveImage img={Background1} /></div>
-                <div><ResponsiveImage img={Background2} /></div>
-                <div><ResponsiveImage img={Background3} /></div>
-            </CustomCarousel>
-        </div>
-    )
-    
-}
-
+import TextLoop from 'react-text-loop'
 
 const LoginScreen:React.FC = () => {
     let [checked, setChecked] = useState(false);
@@ -50,8 +17,9 @@ const LoginScreen:React.FC = () => {
             {/* <LoginCarousel /> */}
             <Container>
                 <Message>
-                    모든 답이<br />
-                    <strong>여기 있을 지도</strong>
+                    <Small children={["🖥 서재 키트", "🙋‍♀ 김지혜 키트", "🏕 캠핑 키트", "클레오파트라 키트"]} />
+                    <Medium children={["서재에 필요한", "김지혜가 쓰는", "캠핑에 필요한", "클레오파트라가 쓰는"]} />
+                    <span> 물건 모음</span>
                 </Message>
                 <LocalField>
                     <input type="text" placeholder="이메일" />
@@ -98,14 +66,6 @@ const responseFail = (err: any) => {
     console.error(err)
 }
 
-const CustomCarousel = styled(Slider)`
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-
-`
-
 const Layout = styled.div`
     width: 100vw;
     height: 100vh;
@@ -123,7 +83,18 @@ const Container = styled.div`
 
 const Message = styled.div`
     font-size: 36px;
+    font-weight: normal;
     margin-bottom: 30px;
+`
+
+const Small = styled(TextLoop)`
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+`
+
+const Medium = styled(TextLoop)`
+    display: block;
 `
 
 const LocalField = styled.div`
