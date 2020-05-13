@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import KakaoLogin from'react-kakao-login'
-import { GoogleLogin } from 'react-google-login'
 import { Link } from 'react-router-dom'
 import CheckBoxFill from '../assets/icons/checkbox-circle-fill.svg'
 import CheckBoxLine from '../assets/icons/checkbox-circle-line.svg'
 import GoogleFill from '../assets/icons/google-fill.svg'
+
+// Button
+import KakaoButton from '../components/auth/KakaoButton'
+import GoogleButton from '../components/auth/GoogleButton'
 
 import TextLoop from 'react-text-loop'
 
@@ -14,12 +16,20 @@ const LoginScreen:React.FC = () => {
 
     return (
         <Layout>
-            {/* <LoginCarousel /> */}
             <Container>
                 <Message>
-                    <Small children={["🖥 서재 키트", "🙋‍♀ 김지혜 키트", "🏕 캠핑 키트", "클레오파트라 키트"]} />
-                    <Medium children={["서재에 필요한", "김지혜가 쓰는", "캠핑에 필요한", "클레오파트라가 쓰는"]} />
-                    <span> 물건 모음</span>
+                    <Small children={["🖥 서재 키트", "🙋‍♀ 김지혜 키트", "🏕 캠핑 키트"]} 
+                        interval={4000}
+                        fade={true}
+                        springConfig={{ stiffness: 300, damping: 30 }}
+                    />
+                    <br />
+                    <Medium children={["서재에 필요한", "지혜가 쓰는", "캠핑에 필요한"]} 
+                        interval={4000}
+                        fade={true}
+                        springConfig={{ stiffness: 300, damping: 30 }}
+                    />{" "}
+                    물건 모음
                 </Message>
                 <LocalField>
                     <input type="text" placeholder="이메일" />
@@ -31,20 +41,11 @@ const LoginScreen:React.FC = () => {
                     <CheckBox src={checked ? CheckBoxFill : CheckBoxLine} />
                     <span>로그인 상태 유지</span>
                 </SetLogin>
-                <KakaoButton 
-                    jsKey=""
-                    buttonText="Kakao으로 시작하기"
-                    onSuccess={responseKakao}
-                    onFailure={responseFail}
-                    getProfile={true}
-                />
+                <KakaoButton />
                 <LineOr>
                     <span>또는</span>
                 </LineOr>
-                <GoogleButton>
-                    <GoogleIcon src={GoogleFill} />
-                    Google로 시작하기
-                </GoogleButton>
+                <GoogleButton />
                 <UserInfo>
                     <Link to="/">회원가입</Link>
                     <Link to="/">암호 재설정</Link>
@@ -54,18 +55,6 @@ const LoginScreen:React.FC = () => {
     )
 }
 
-const responseKakao = (res: any) => {
-    console.log(res)
-}
-
-const responseGoogle = (res: any) => {
-    console.log(res)
-}
-
-const responseFail = (err: any) => {
-    console.error(err)
-}
-
 const Layout = styled.div`
     width: 100vw;
     height: 100vh;
@@ -73,6 +62,7 @@ const Layout = styled.div`
     justify-content: center;
     align-items: center;
     color: #000;
+    overflow: hidden;
 `
 
 const Container = styled.div`
@@ -82,19 +72,18 @@ const Container = styled.div`
 `
 
 const Message = styled.div`
-    font-size: 36px;
     font-weight: normal;
     margin-bottom: 30px;
+    font-size: 24px;
 `
 
 const Small = styled(TextLoop)`
-    display: block;
     font-size: 18px;
     font-weight: bold;
 `
 
 const Medium = styled(TextLoop)`
-    display: block;
+    
 `
 
 const LocalField = styled.div`
@@ -162,38 +151,6 @@ const LineOr = styled.div`
         background: #f2f2f2;
         content: '';
     }
-`
-
-const KakaoButton = styled(KakaoLogin)`
-    padding: 0;
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    color: #000;
-    background-color: #FFEB00;
-    border-radius: 3px;
-    font-size: 16px;
-    border: none;
-`
-
-const GoogleButton = styled.div`
-    width: 100%;
-    height: 50px;
-    text-align: center;
-    background: #fff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-`
-
-const GoogleIcon = styled.img`
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    left: 30px;
 `
 
 const UserInfo = styled.div`
