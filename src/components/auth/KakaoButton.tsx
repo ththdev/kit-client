@@ -1,8 +1,39 @@
 import React from 'react'
 import styled from 'styled-components'
 import KakaoLogin from 'react-kakao-login'
+import { KAKAO_LOGIN } from '../../graphql/user'
+import { useApolloClient } from '@apollo/react-hooks'
 
 const KakaoButton: React.FC = () => {
+    const client = useApolloClient();
+
+    const responseKakao = async (res: any) => {
+        const { id } = res.profile
+        const { email } = res.profile.kakao_account
+        const { nickname, profile_image, } = res.profile.properties
+        
+        try {
+            await client.mutate({
+                mutation: KAKAO_LOGIN,
+                variables: {
+                    name: nickname,
+                    email,
+                    kakaoId: id.toString(),
+                    profileImage: profile_image
+                }
+            }).then(result => {
+                const token = result.data.kakaoLogin.token
+                localStorage.setItem("ACCESS_TOKEN", token)
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    
+    const responseFail = (err: any) => {
+        console.error(err)
+    }
+
     return (
         <Button 
             jsKey="e9d1fe1f98fe9602e214f4ea24ecbb4b"
@@ -12,14 +43,6 @@ const KakaoButton: React.FC = () => {
             getProfile={true}
         />
     )
-}
-
-const responseKakao = (res: any) => {
-    console.log(res)
-}
-
-const responseFail = (err: any) => {
-    console.error(err)
 }
 
 const Button = styled(KakaoLogin)`

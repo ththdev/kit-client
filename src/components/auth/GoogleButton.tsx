@@ -1,9 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import GoogleLogin from 'react-google-login'
 import GoogleFill from '../../assets/icons/google-fill.svg'
+import { GOOGLE_LOGIN } from '../../graphql/user'
+import { useApolloClient } from '@apollo/react-hooks'
+import { Redirect } from 'react-router-dom'
 
 const GoogleButton: React.FC = () => {
+    const client = useApolloClient();
+    
+    const [isLogin, setIsLogin] = useState(false);
+
+    const responseGoogle = async (res: any) => {
+        const { googleId } = res;
+        const { name, email, imageUrl } = res.profileObj;
+    
+        try {
+            await client.mutate({
+                mutation: GOOGLE_LOGIN,
+                variables: { name, googleId, email, profileImage: imageUrl }
+            }).then(result => {
+                const token = result.data.googleLogin.token
+                localStorage.setItem("ACCESS_TOKEN", token)
+            })
+            setIsLogin(true)
+        } catch(e) {
+            console.error(e)
+        }
+    }
+    
+    const responseFail = (err: any) => {
+        console.error(err)
+    }
+
     return (
         <GoogleLogin 
             clientId="493563361431-g4bar57i9uudnp5oih3a53jom7bn42qu.apps.googleusercontent.com"
@@ -18,21 +47,8 @@ const GoogleButton: React.FC = () => {
                     </Button>
                 )
             }}
-            cookiePolicy={'single_host_origin'}
         />
     )
-}
-
-const responseGoogle = (res: any) => {
-    console.log(res)
-    console.log(`googleId: ${res.googleId}`)
-    console.log(`email: ${res.profileObj.email}`)
-    console.log(`name: ${res.profileObj.name}`)
-    console.log(`profileImage: ${res.profileObj.imageUrl}`)
-}
-
-const responseFail = (err: any) => {
-    console.error(err)
 }
 
 const Button = styled.div`

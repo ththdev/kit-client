@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import CheckBoxFill from '../assets/icons/checkbox-circle-fill.svg'
 import CheckBoxLine from '../assets/icons/checkbox-circle-line.svg'
-import GoogleFill from '../assets/icons/google-fill.svg'
+import { Redirect } from 'react-router-dom'
 
 // Button
 import KakaoButton from '../components/auth/KakaoButton'
@@ -14,6 +14,12 @@ import TextLoop from 'react-text-loop'
 const LoginScreen:React.FC = () => {
     let [checked, setChecked] = useState(false);
 
+    const token = localStorage.getItem("ACCESS_TOKEN")
+
+    if(token) {
+        return <Redirect to="/profile" />
+    }
+    
     return (
         <Layout>
             <Container>
