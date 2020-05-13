@@ -28,7 +28,7 @@ const ProfileContainer: React.FC = () => {
 
     return (
         <AppLayout>
-            안녕하세요<br />
+            안녕하세요!<br />
             {username}님 
         </AppLayout>
     )
