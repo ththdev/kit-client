@@ -11,9 +11,8 @@ const GoogleButton: React.FC = () => {
             onFailure={responseFail}
             buttonText="Login"
             render={renderProps => {
-                console.log(renderProps.onClick)
                 return (
-                    <Button onClick={props => console.log('clicked')} >
+                    <Button onClick={responseGoogle} >
                         <GoogleIcon src={GoogleFill} />
                         Google로 시작하기
                     </Button>
