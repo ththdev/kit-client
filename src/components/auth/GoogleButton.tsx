@@ -25,6 +25,10 @@ const GoogleButton: React.FC = () => {
 
 const responseGoogle = (res: any) => {
     console.log(res)
+    console.log(`googleId: ${res.googleId}`)
+    console.log(`email: ${res.profileObj.email}`)
+    console.log(`name: ${res.profileObj.name}`)
+    console.log(`profileImage: ${res.profileObj.imageUrl}`)
 }
 
 const responseFail = (err: any) => {
