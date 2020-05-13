@@ -12,7 +12,7 @@ const GoogleButton: React.FC = () => {
             buttonText="Login"
             render={renderProps => {
                 return (
-                    <Button onClick={responseGoogle} >
+                    <Button onClick={renderProps.onClick} >
                         <GoogleIcon src={GoogleFill} />
                         Google로 시작하기
                     </Button>
