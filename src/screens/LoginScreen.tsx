@@ -11,15 +11,10 @@ import GoogleButton from '../components/auth/GoogleButton'
 
 import TextLoop from 'react-text-loop'
 
-const LoginScreen:React.FC = () => {
+const LoginScreen = ({ history }: any)=> {
     let [checked, setChecked] = useState(false);
-
     const token = localStorage.getItem("ACCESS_TOKEN")
 
-    if(token) {
-        return <Redirect to="/profile" />
-    }
-    
     return (
         <Layout>
             <Container>

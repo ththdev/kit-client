@@ -4,11 +4,12 @@ import GoogleLogin from 'react-google-login'
 import GoogleFill from '../../assets/icons/google-fill.svg'
 import { GOOGLE_LOGIN } from '../../graphql/user'
 import { useApolloClient } from '@apollo/react-hooks'
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
-const GoogleButton: React.FC = () => {
+
+const GoogleButton = () => {
     const client = useApolloClient();
-    
+    const history = useHistory();    
     const [isLogin, setIsLogin] = useState(false);
 
     const responseGoogle = async (res: any) => {
@@ -24,6 +25,7 @@ const GoogleButton: React.FC = () => {
                 localStorage.setItem("ACCESS_TOKEN", token)
             })
             setIsLogin(true)
+            history.push('/')
         } catch(e) {
             console.error(e)
         }
